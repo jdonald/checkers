@@ -205,7 +205,13 @@ namespace CheckersBoard
                 if (CheckMove())
                 {
                     MakeMove();
+					turn = "Red";
                     aiMakeMove();
+					turn = "Black";
+					playerMakeMove();
+					turn = "Red";
+					aiMakeMove();
+					turn = "Black";
                 }
             }
         }
@@ -420,7 +426,7 @@ namespace CheckersBoard
 
         private void aiMakeMove()
         {
-            currentMove = CheckersAI.GetMove(GetCurrentBoard());
+            currentMove = CheckersAI.GetMove(GetCurrentBoard(), "Red");
             if (currentMove != null)
             {
                 if (CheckMove())
@@ -430,7 +436,19 @@ namespace CheckersBoard
             }
         }
 
-        private CheckerBoard GetCurrentBoard()
+		private void playerMakeMove()
+		{
+			currentMove = CheckersAI.GetMove(GetCurrentBoard(), "Black");
+			if (currentMove != null)
+			{
+				if (CheckMove())
+				{
+					MakeMove();
+				}
+			}
+		}
+
+		private CheckerBoard GetCurrentBoard()
         {
             CheckerBoard board = new CheckerBoard();
             for (int r = 1; r < 9; r++)
